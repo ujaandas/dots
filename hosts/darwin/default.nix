@@ -1,5 +1,10 @@
 { config, pkgs, username, ... }:
 {
+  imports = [
+    ../../modules/darwin/home-manager.nix
+    ../../modules/darwin/homebrew.nix
+  ];
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   nix = {
