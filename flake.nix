@@ -20,23 +20,12 @@
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, agenix }:
   let
     user = "ooj";
-    configuration = { pkgs, ... }: {
-      environment.systemPackages =
-        [ pkgs.vim ];
-
-      nix.settings.experimental-features = "nix-command flakes";
-
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      system.stateVersion = 6;
-      nixpkgs.hostPlatform = "aarch64-darwin";
-    };
   in
   {
     darwinConfigurations."ooj" = darwin.lib.darwinSystem {
       specialArgs = inputs // { inherit user; };
       modules = [ 
-        configuration 
+        ./hosts/darwin/default.nix 
         agenix.nixosModules.default
         home-manager.darwinModules.home-manager
       ];
