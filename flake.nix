@@ -19,13 +19,13 @@
 
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, agenix }:
   let
-    user = "ooj";
+    username = "ooj";
   in
   {
-    darwinConfigurations."ooj" = darwin.lib.darwinSystem {
-      specialArgs = inputs // { inherit user; };
+    darwinConfigurations.${username} = darwin.lib.darwinSystem {
+      specialArgs = inputs // { inherit username; };
       modules = [ 
-        ./hosts/darwin/default.nix 
+        ./hosts/darwin/default.nix
         agenix.nixosModules.default
         home-manager.darwinModules.home-manager
       ];

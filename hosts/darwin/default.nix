@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -17,7 +17,7 @@
   };
 
   system = {
-    primaryUser = "ooj";
+    primaryUser = username;
     stateVersion = 6;
     configurationRevision = config.rev or config.dirtyRev or null;
 
