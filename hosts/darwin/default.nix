@@ -3,18 +3,111 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   nix = {
-    gc = {
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
-    };
+    enable = false; # determinate nix and nix-darwin compat
+
+    # gc = {
+    #   automatic = true;
+    #   interval = { Weekday = 0; Hour = 2; Minute = 0; };
+    #   options = "--delete-older-than 30d";
+    # };
+
     settings = {
       experimental-features = "nix-command flakes";
     };
   };
 
   system = {
+    primaryUser = "ooj";
     stateVersion = 6;
     configurationRevision = config.rev or config.dirtyRev or null;
+
+    startup.chime = true; # fun!
+
+    defaults = {
+      NSGlobalDomain = {
+        AppleICUForce24HourTime = false; # use 12hr time :)
+        AppleInterfaceStyleSwitchesAutomatically = true; # auto set light/dark mode
+        AppleShowScrollBars = "WhenScrolling"; # when to show scroll bars
+        "com.apple.sound.beep.feedback" = 0; # sound feedback when changing volume
+        "com.apple.mouse.tapBehavior" = 1; # enable tap to click
+      };
+
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = -1.0; # disable mouse acceleration
+      };
+
+      controlcenter = {
+        BatteryShowPercentage = true; # show battery % in menu bar
+        AirDrop = true; # show icon in menu bar
+        FocusModes = false; # hide icon in menu bar
+        Bluetooth = false;
+        Display = false;
+        NowPlaying = false;
+        Sound = false;
+      };
+
+      dock = {
+        autohide = true; # autohide the dock
+        tilesize = 40; # dock icon size (default is 48)
+        magnification = true; # magnify on hover
+        mouse-over-hilite-stack = true; # highlight window grid on hover
+      };
+
+      finder = {
+        AppleShowAllExtensions = true; # show file ext
+        AppleShowAllFiles = true; # show hidden files
+        CreateDesktop = false; # hide desktop icons
+        ShowPathbar = true; # show path breadcrumbs
+        ShowStatusBar = true; # show status bar with item/disk stats
+        _FXShowPosixPathInTitle = true; # show full POSIX fp
+        _FXSortFoldersFirst = true; # keep folders on top while sorting by name
+      };
+
+      loginwindow = {
+        DisableConsoleAccess = true; # disable ability to enter '>console' in login window
+        GuestEnabled = false; # disable guest account creation ability
+      };
+
+      trackpad = {
+        ActuationStrength = 1; # enable silent clicking
+        Clicking = true; # enable tap to click
+        TrackpadRightClick = true; # enable trackpad right click (vs using control) 
+        TrackpadThreeFingerTapGesture = 2; # look up word
+      };
+
+      CustomUserPreferences = {
+        "com.apple.AppleMultitouchTrackpad" = {
+          TrackpadThreeFingerHorizSwipeGesture = 0; # disable horizontal swipe
+          TrackpadThreeFingerVertSwipeGesture = 2; # swipe up for mission ctrl
+          # disable 4 finger stuff
+          TrackpadFourFingerHorizSwipeGesture = 0;
+          TrackpadFourFingerPinchGesture = 0;
+          TrackpadFourFingerVertSwipeGesture = 0;
+        };
+
+        "com.apple.desktopservices" = { 
+          # dont create dsstore on network/usb drives
+          DSDontWriteNetworkStores = true; 
+          DSDontWriteUSBStores = true;
+      };
+
+        "com.apple.screensaver" = {
+          # ask for passwd right after sleep/screensaver
+          askForPassword = 1;
+          askForPasswordDelay = 0;
+        };
+
+        "com.apple.screencapture" = {
+          # screenshots default to desktop as png
+          location = "~/Desktop";
+          type = "png";
+        };
+
+        "com.apple.print.PrintingPrefs" = {
+          # autoquit printer when done
+          "Quit When Finished" = true;
+        };
+      };
+    };
   };
 }
