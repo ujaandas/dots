@@ -21,6 +21,9 @@
     };
   };
 
+  # use fingerprint for sudo
+  security.pam.services.sudo_local.touchIdAuth = true;
+
   system = {
     primaryUser = username;
     stateVersion = 6;
@@ -53,9 +56,16 @@
 
       dock = {
         autohide = true; # autohide the dock
-        tilesize = 40; # dock icon size (default is 48)
         magnification = true; # magnify on hover
+        showhidden = true; # show hidden apps
+        minimize-to-application = true; # dont minimize to separate logo
+        tilesize = 40; # dock icon size (default is 48)
+        largesize = 64; # dock icon size on hover (default is 16)
         mouse-over-hilite-stack = true; # highlight window grid on hover
+        # persistent-apps = 
+        # [
+
+        # ];
       };
 
       finder = {
@@ -114,5 +124,10 @@
         };
       };
     };
+
+    # install rosetta 2
+    activationScripts.extraActivation.text = ''
+      softwareupdate --install-rosetta --agree-to-license
+    '';
   };
 }

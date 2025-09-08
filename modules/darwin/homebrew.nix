@@ -16,6 +16,25 @@
 
   homebrew = {
     enable = true;
+    # gui apps i need
+    casks = [
+      # dev tools
+      "homebrew/cask/docker"
+      "visual-studio-code"
+      "wezterm"
+
+      # productivity
+      "obsidian"
+      "alfred"
+      "alt-tab"
+
+      # browser
+      "firefox"
+
+      # communication
+      "discord"
+      "zoom"
+    ];
     taps = builtins.attrNames config.nix-homebrew.taps; # align tap config with nix-homebrew
   };
 }
