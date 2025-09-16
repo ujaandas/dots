@@ -1,5 +1,8 @@
 { lib, config, specialArgs, username, pkgs, ... }:
 {
+  imports = [
+    ../shared/home-manager.nix
+  ];
 
   # define my user with visible home dir and shell and wtv else
   users.users.${username} = {
@@ -19,15 +22,12 @@
       # combine system packages with all user home packages
       paths =
         config.environment.systemPackages
-        ++ (builtins.concatMap (x: x.home.packages) (builtins.attrsets.attrValues config.home-manager.users));
+        ++ (builtins.concatMap (x: x.home.packages) (lib.attrsets.attrValues config.home-manager.users));
     }
   );
 
   home-manager = {
-    useGlobalPkgs = true; # use global nixpkgs
-    useUserPackages = true; # allow user defined pkgs
-    extraSpecialArgs = specialArgs; # pass extra args to hm modules
-    sharedModules = [
+    sharedModules = lib.mkAfter [
       # disable automatic app linking by hm
       { targets.darwin.linkApps.enable = false; }
     ];
@@ -35,23 +35,13 @@
     # define hm config for the user
     users.${username} = { pkgs, ... }: {
       home = {
-        inherit username;
         homeDirectory = "/Users/${username}";
-        stateVersion = "25.05";
-        
+
         # my apps
-        packages = with pkgs; [ 
-          iterm2 
+        packages = with pkgs; lib.mkAfter [ 
+           
         ];
       };
-
-      # enable and let hm install itself
-      programs = {
-        home-manager.enable = true;
-      };
-
-      # xdg sup
-      xdg.enable = true;
     };
   };
 }
