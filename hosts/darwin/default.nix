@@ -3,18 +3,20 @@
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/darwin/homebrew.nix
+    ../../modules/darwin/app-settings.nix
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
-    enable = false; # determinate nix and nix-darwin compat
+    enable = true;
 
-    # gc = {
-    #   automatic = true;
-    #   interval = { Weekday = 0; Hour = 2; Minute = 0; };
-    #   options = "--delete-older-than 30d";
-    # };
+    gc = {
+      automatic = true;
+      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      options = "--delete-older-than 30d";
+    };
 
     settings = {
       experimental-features = "nix-command flakes";

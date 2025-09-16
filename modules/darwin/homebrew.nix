@@ -19,9 +19,9 @@
     # gui apps i need
     casks = [
       # dev tools
-      "homebrew/cask/docker"
+      # "homebrew/cask/docker"
       "visual-studio-code"
-      "wezterm"
+      # "wezterm"
 
       # productivity
       "obsidian"
@@ -36,5 +36,6 @@
       "zoom"
     ];
     taps = builtins.attrNames config.nix-homebrew.taps; # align tap config with nix-homebrew
+    onActivation.cleanup = "zap"; # run `brew uninstall --zap` for all formulae not in brewfile
   };
 }

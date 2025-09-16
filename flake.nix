@@ -36,7 +36,11 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, agenix }:
+  outputs = inputs@{ 
+    self, nixpkgs, darwin, home-manager, 
+    nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, 
+    agenix, 
+   }:
   let
     username = "ooj";
   in
