@@ -39,9 +39,7 @@
         homeDirectory = "/Users/${username}";
 
         # my apps
-        packages = with pkgs; lib.mkAfter [ 
-          iterm2
-        ];
+        packages = lib.mkAfter ( builtins.import ./apps.nix { inherit pkgs; } );
       };
     };
   };

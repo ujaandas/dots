@@ -11,9 +11,9 @@
       home = {
         username = lib.mkForce username;
         stateVersion = lib.mkForce "25.05";
-        packages = with pkgs; lib.mkBefore [ 
-          cowsay
-        ];
+
+        # default apps
+        packages = lib.mkBefore ( builtins.import ./apps.nix { inherit pkgs; } );
       };
 
       # enable and let hm install itself
