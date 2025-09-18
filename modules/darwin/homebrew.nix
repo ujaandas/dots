@@ -18,22 +18,7 @@
     enable = true;
     # gui apps i need
     casks = [
-      # dev tools
-      # "homebrew/cask/docker"
-      "visual-studio-code"
-      # "wezterm"
-
-      # productivity
-      "obsidian"
-      "alfred"
-      "alt-tab"
-
-      # browser
-      "firefox"
-
-      # communication
-      "discord"
-      "zoom"
+      # for now, replaced with home-manager with recent fix
     ];
     taps = builtins.attrNames config.nix-homebrew.taps; # align tap config with nix-homebrew
     onActivation.cleanup = "zap"; # run `brew uninstall --zap` for all formulae not in brewfile

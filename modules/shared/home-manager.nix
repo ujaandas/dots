@@ -16,9 +16,12 @@
         packages = lib.mkBefore ( builtins.import ./apps.nix { inherit pkgs; } );
       };
 
-      # enable and let hm install itself
       programs = {
+        # enable and let hm install itself
         home-manager.enable = lib.mkForce true;
+
+        # trying out vscodium
+        vscode = lib.mkForce ( builtins.import ./pkgs/vscode.nix { inherit pkgs lib; });
       };
 
       # xdg sup

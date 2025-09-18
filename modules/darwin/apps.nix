@@ -1,3 +1,5 @@
 { pkgs, ... }: with pkgs; [
-  iterm2
+  obsidian
+  raycast
+  alt-tab-macos
 ]
