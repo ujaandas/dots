@@ -40,7 +40,7 @@
 
         # my apps
         packages = with pkgs; lib.mkAfter [ 
-           iterm2
+          iterm2
         ];
       };
     };
