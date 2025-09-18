@@ -2,6 +2,7 @@
 {
   imports = [
     ../shared/home-manager.nix
+    ./app-plist-settings.nix
   ];
 
   # define my user with visible home dir and shell and wtv else
@@ -39,7 +40,7 @@
 
         # my apps
         packages = with pkgs; lib.mkAfter [ 
-           
+           iterm2
         ];
       };
     };

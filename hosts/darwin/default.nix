@@ -3,7 +3,6 @@
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/darwin/homebrew.nix
-    ../../modules/darwin/app-settings.nix
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
