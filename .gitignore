@@ -8,6 +8,9 @@ Icon?
 # build
 /result
 /result-*
+
+# nix
+.direnv
 /.nix-gcroots
 /nix-support
 /nix-store
