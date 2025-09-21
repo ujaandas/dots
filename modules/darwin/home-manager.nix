@@ -1,5 +1,11 @@
-{ lib, config, specialArgs, username, pkgs, ... }:
 {
+  lib,
+  config,
+  specialArgs,
+  username,
+  pkgs,
+  ...
+}: {
   imports = [
     ../shared/home-manager.nix
     ./app-plist-settings.nix
@@ -10,7 +16,6 @@
     name = username;
     home = "/Users/${username}";
     isHidden = false;
-    shell = pkgs.zsh;
   };
 
   # override default application linking with a custom set
@@ -30,16 +35,17 @@
   home-manager = {
     sharedModules = lib.mkAfter [
       # disable automatic app linking by hm
-      { targets.darwin.linkApps.enable = false; }
+      {targets.darwin.linkApps.enable = false;}
     ];
 
     # define hm config for the user
-    users.${username} = { pkgs, ... }: {
+    users.${username} = {pkgs, ...}: {
       home = {
+        # inherit username; # no need for this as we mkForce username in shared/
         homeDirectory = "/Users/${username}";
 
         # my apps
-        packages = lib.mkAfter ( builtins.import ./apps.nix { inherit pkgs; } );
+        packages = lib.mkAfter (builtins.import ./packages.nix {inherit pkgs;});
       };
     };
   };

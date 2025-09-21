@@ -1,5 +1,9 @@
-{ config, pkgs, username, ... }:
 {
+  config,
+  pkgs,
+  username,
+  ...
+}: {
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/darwin/homebrew.nix
@@ -13,13 +17,21 @@
 
     gc = {
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 30d";
     };
 
     settings = {
       experimental-features = "nix-command flakes";
+      warn-dirty = false; # usually is anyways
     };
+
+    # old, prefer flakes
+    channel.enable = false;
   };
 
   # use fingerprint for sudo
@@ -63,7 +75,7 @@
         tilesize = 40; # dock icon size (default is 48)
         largesize = 64; # dock icon size on hover (default is 16)
         mouse-over-hilite-stack = true; # highlight window grid on hover
-        # persistent-apps = 
+        # persistent-apps =
         # [
 
         # ];
@@ -87,7 +99,7 @@
       trackpad = {
         ActuationStrength = 1; # enable silent clicking
         Clicking = true; # enable tap to click
-        TrackpadRightClick = true; # enable trackpad right click (vs using control) 
+        TrackpadRightClick = true; # enable trackpad right click (vs using control)
         TrackpadThreeFingerTapGesture = 2; # look up word
       };
 
@@ -101,11 +113,11 @@
           TrackpadFourFingerVertSwipeGesture = 0;
         };
 
-        "com.apple.desktopservices" = { 
+        "com.apple.desktopservices" = {
           # dont create dsstore on network/usb drives
-          DSDontWriteNetworkStores = true; 
+          DSDontWriteNetworkStores = true;
           DSDontWriteUSBStores = true;
-      };
+        };
 
         "com.apple.screensaver" = {
           # ask for passwd right after sleep/screensaver

@@ -36,23 +36,99 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = inputs@{ 
-    self, nixpkgs, darwin, home-manager, 
-    nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, 
-    agenix, 
-   }:
-  let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    darwin,
+    home-manager,
+    nix-homebrew,
+    homebrew-bundle,
+    homebrew-core,
+    homebrew-cask,
+    agenix,
+  }: let
     username = "ooj";
-  in
-  {
+    system = "aarch64-darwin";
+  in {
     darwinConfigurations.${username} = darwin.lib.darwinSystem {
-      specialArgs = inputs // { inherit username; };
-      modules = [ 
+      specialArgs =
+        inputs
+        // {
+          inherit username;
+        };
+      modules = [
         ./hosts/darwin/default.nix
         agenix.nixosModules.default
         home-manager.darwinModules.home-manager
         nix-homebrew.darwinModules.nix-homebrew
       ];
+    };
+
+    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+      buildInputs = with nixpkgs.legacyPackages.${system}; [
+        nixfmt-rfc-style
+        nixpkgs-fmt
+        statix
+        alejandra
+        self.packages.default.build
+        self.packages.default.activate
+        self.packages.default.rebuild
+        self.packages.default.format
+        self.packages.default.lint
+      ];
+    };
+
+    packages.default = let
+      pkgs = nixpkgs.legacyPackages.${system};
+
+      mkScript = name: text:
+        pkgs.writeShellApplication {
+          inherit name;
+          inherit text;
+          runtimeInputs = with pkgs; [
+            nixfmt-rfc-style
+            nixpkgs-fmt
+            statix
+            alejandra
+          ];
+        };
+    in {
+      build = mkScript "build" ''
+        echo "🔨 Building system flake..."
+        sudo darwin-rebuild build --flake .#${username}
+      '';
+
+      activate = mkScript "activate" ''
+        echo "🚀 Activating system from ./result..."
+        sudo darwin-rebuild build activate
+      '';
+
+      format = mkScript "format" ''
+        echo "🎨 Formatting Nix code..."
+
+        case "$1" in
+          --alejandra) formatter="alejandra" ;;
+          --nixpkgs-fmt) formatter="nixpkgs-fmt" ;;
+          --nixfmt-rfc-style) formatter="nixfmt-rfc-style" ;;
+          *) formatter="nixfmt-rfc-style" ;;
+        esac
+
+        echo "Using formatter: $formatter"
+        "$formatter" .
+      '';
+
+      lint = mkScript "lint" ''
+        echo "🔍 Linting Nix code with statix..."
+        statix check --ignore result .direnv
+      '';
+
+      rebuild = mkScript "rebuild" ''
+        echo "🔁 Rebuilding system..."
+        nix run .#format
+        nix run .#lint
+        nix run .#build
+        nix run .#activate
+      '';
     };
   };
 }

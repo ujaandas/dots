@@ -5,3 +5,6 @@ Give Nix full disk access
 
 ### Subsequent Regeneration
 `sudo darwin-rebuild switch --flake .#ooj`
+
+### Needed to Fix Perms on Mac
+sudo chown -R username:staff ~/.local
