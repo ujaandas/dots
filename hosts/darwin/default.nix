@@ -2,6 +2,7 @@
   config,
   pkgs,
   username,
+  nix-vscode-extensions,
   ...
 }:
 {
@@ -10,8 +11,13 @@
     ../../modules/darwin/homebrew.nix
   ];
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    config.allowUnfree = true;
+    overlays = [
+      nix-vscode-extensions.overlays.default
+    ];
+  };
 
   nix = {
     enable = true;

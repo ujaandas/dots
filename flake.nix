@@ -33,6 +33,8 @@
       flake = false;
     };
 
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
     agenix.url = "github:ryantm/agenix";
   };
 
@@ -46,6 +48,7 @@
       homebrew-bundle,
       homebrew-core,
       homebrew-cask,
+      nix-vscode-extensions,
       agenix,
     }:
     let

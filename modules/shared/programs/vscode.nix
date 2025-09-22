@@ -7,15 +7,19 @@
   package = pkgs.vscodium;
 
   profiles.default = {
-    extensions = with pkgs.vscode-extensions; [
-      # themes
-      catppuccin.catppuccin-vsc
-
-      # dev
-      jnoortheen.nix-ide
-      eamodio.gitlens
-      usernamehw.errorlens
-    ];
+    extensions =
+      let
+        marketplaceExt = with pkgs.vscode-marketplace; [
+          catppuccin.catppuccin-vsc
+          jnoortheen.nix-ide
+          eamodio.gitlens
+          usernamehw.errorlens
+        ];
+        openVsxExt = with pkgs.open-vsx; [
+          jeanp413.open-remote-ssh
+        ];
+      in
+      marketplaceExt ++ openVsxExt;
 
     userSettings = {
       # ui pref
