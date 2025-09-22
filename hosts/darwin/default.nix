@@ -3,7 +3,8 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/darwin/homebrew.nix
@@ -33,6 +34,12 @@
     # old, prefer flakes
     channel.enable = false;
   };
+
+  # fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+  ];
 
   # use fingerprint for sudo
   security.pam.services.sudo_local.touchIdAuth = true;

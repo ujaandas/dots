@@ -1,11 +1,11 @@
 {
   lib,
   config,
-  specialArgs,
   username,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../shared/home-manager.nix
     ./app-plist-settings.nix
@@ -35,18 +35,20 @@
   home-manager = {
     sharedModules = lib.mkAfter [
       # disable automatic app linking by hm
-      {targets.darwin.linkApps.enable = false;}
+      { targets.darwin.linkApps.enable = false; }
     ];
 
     # define hm config for the user
-    users.${username} = {pkgs, ...}: {
-      home = {
-        # inherit username; # no need for this as we mkForce username in shared/
-        homeDirectory = "/Users/${username}";
+    users.${username} =
+      { pkgs, ... }:
+      {
+        home = {
+          # inherit username; # no need for this as we mkForce username in shared/
+          homeDirectory = "/Users/${username}";
 
-        # my apps
-        packages = lib.mkAfter (builtins.import ./packages.nix {inherit pkgs;});
+          # my apps
+          packages = lib.mkAfter (builtins.import ./packages.nix { inherit pkgs; });
+        };
       };
-    };
   };
 }

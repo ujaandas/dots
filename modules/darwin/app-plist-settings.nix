@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # the same attrset being changed in hosts/darwin
   # just felt cleaner to have app specific (non-system) settings here
   # well, anything that doesnt come w a config file and needs a plist change at least

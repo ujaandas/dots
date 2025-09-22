@@ -1,8 +1,8 @@
 {
   lib,
-  config,
   ...
-}: {
+}:
+{
   enable = true;
 
   # basic stuff, duh
@@ -14,6 +14,8 @@
   # sane aliases
   shellAliases = {
     ls = "eza --icons";
+    ll = "eza -l";
+    la = "eza -la";
     cat = "bat --paging=never";
     top = "btop";
     cd = "z";
@@ -23,7 +25,7 @@
   };
 
   # init extra
-  initContent = lib.mkBefore ''
+  initContent = ''
     export EDITOR=nvim
     export FZF_DEFAULT_COMMAND="fd --type f"
     eval "$(zoxide init zsh)"

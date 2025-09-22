@@ -36,99 +36,136 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    darwin,
-    home-manager,
-    nix-homebrew,
-    homebrew-bundle,
-    homebrew-core,
-    homebrew-cask,
-    agenix,
-  }: let
-    username = "ooj";
-    system = "aarch64-darwin";
-  in {
-    darwinConfigurations.${username} = darwin.lib.darwinSystem {
-      specialArgs =
-        inputs
-        // {
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      darwin,
+      home-manager,
+      nix-homebrew,
+      homebrew-bundle,
+      homebrew-core,
+      homebrew-cask,
+      agenix,
+    }:
+    let
+      username = "ooj";
+      # todo: either use flake-utils or make helper funcs
+      system = "aarch64-darwin";
+    in
+    {
+      darwinConfigurations.${username} = darwin.lib.darwinSystem {
+        specialArgs = inputs // {
           inherit username;
         };
-      modules = [
-        ./hosts/darwin/default.nix
-        agenix.nixosModules.default
-        home-manager.darwinModules.home-manager
-        nix-homebrew.darwinModules.nix-homebrew
-      ];
-    };
+        modules = [
+          ./hosts/darwin/default.nix
+          agenix.nixosModules.default
+          home-manager.darwinModules.home-manager
+          nix-homebrew.darwinModules.nix-homebrew
+        ];
+      };
 
-    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
-      buildInputs = with nixpkgs.legacyPackages.${system}; [
-        nixfmt-rfc-style
-        nixpkgs-fmt
-        statix
-        alejandra
-        self.packages.default.build
-        self.packages.default.activate
-        self.packages.default.rebuild
-        self.packages.default.format
-        self.packages.default.lint
-      ];
-    };
+      devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+        buildInputs = [
+          self.packages.${system}.search
+          self.packages.${system}.build
+          self.packages.${system}.activate
+          self.packages.${system}.rebuild
+          self.packages.${system}.format
+          self.packages.${system}.lint
+          self.packages.${system}.test-all
+          self.packages.${system}.check
+        ];
+      };
 
-    packages.default = let
-      pkgs = nixpkgs.legacyPackages.${system};
+      packages.${system} =
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
 
-      mkScript = name: text:
-        pkgs.writeShellApplication {
-          inherit name;
-          inherit text;
-          runtimeInputs = with pkgs; [
-            nixfmt-rfc-style
-            nixpkgs-fmt
-            statix
-            alejandra
-          ];
+          mkScript =
+            name: text:
+            pkgs.writeShellApplication {
+              inherit name;
+              inherit text;
+              runtimeInputs = with pkgs; [
+                nixfmt-tree
+                statix
+              ];
+            };
+        in
+        {
+          search = mkScript "search" ''
+            echo "🔍 Starting nixpkgs REPL..."
+            nix repl -f '<nixpkgs>'
+            echo "👋 REPL exited."
+          '';
+
+          build = mkScript "build" ''
+            echo "🔨 Building system flake..."
+            if sudo darwin-rebuild build --flake .#${username}; then
+              echo "✅ Build completed successfully."
+            else
+              echo "❌ Build failed."
+              exit 1
+            fi
+          '';
+
+          activate = mkScript "activate" ''
+            echo "🚀 Activating system..."
+            if sudo result/activate; then
+              echo "✅ Activation completed successfully."
+            else
+              echo "❌ Activation failed."
+              exit 1
+            fi
+          '';
+
+          format = mkScript "format" ''
+            echo "🎨 Formatting Nix code..."
+            if treefmt --walk git; then
+              echo "✅ Formatting completed successfully."
+            else
+              echo "❌ Formatting failed."
+              exit 1
+            fi
+          '';
+
+          lint = mkScript "lint" ''
+            echo "🔍 Linting Nix code..."
+            if statix check --ignore result .direnv; then
+              echo "✅ Linting passed with no issues."
+            else
+              echo "❌ Linting failed: issues detected."
+              exit 1
+            fi
+          '';
+
+          check = mkScript "check" ''
+            echo "☑️ Checking flake..."
+            if nix flake check; then
+              echo "✅ Flake check passed with no issues."
+            else
+              echo "❌ Flake check failed: issues detected."
+              exit 1
+            fi
+          '';
+
+          test-all = mkScript "test-all" ''
+            echo "🧪 Testing system..."
+            check || exit 1
+            format || exit 1
+            lint || exit 1
+            build || exit 1
+            echo "✅ Test completed successfully."
+          '';
+
+          rebuild = mkScript "rebuild" ''
+            echo "🔁 Rebuilding system..."
+            test-all || exit 1
+            activate || exit 1
+            echo "✅ Rebuild completed successfully."
+          '';
         };
-    in {
-      build = mkScript "build" ''
-        echo "🔨 Building system flake..."
-        sudo darwin-rebuild build --flake .#${username}
-      '';
-
-      activate = mkScript "activate" ''
-        echo "🚀 Activating system from ./result..."
-        sudo darwin-rebuild build activate
-      '';
-
-      format = mkScript "format" ''
-        echo "🎨 Formatting Nix code..."
-
-        case "$1" in
-          --alejandra) formatter="alejandra" ;;
-          --nixpkgs-fmt) formatter="nixpkgs-fmt" ;;
-          --nixfmt-rfc-style) formatter="nixfmt-rfc-style" ;;
-          *) formatter="nixfmt-rfc-style" ;;
-        esac
-
-        echo "Using formatter: $formatter"
-        "$formatter" .
-      '';
-
-      lint = mkScript "lint" ''
-        echo "🔍 Linting Nix code with statix..."
-        statix check --ignore result .direnv
-      '';
-
-      rebuild = mkScript "rebuild" ''
-        echo "🔁 Rebuilding system..."
-        nix run .#format
-        nix run .#lint
-        nix run .#build
-        nix run .#activate
-      '';
     };
-  };
 }

@@ -1,8 +1,10 @@
-{pkgs, ...}:
-with pkgs; [
+{ pkgs, ... }:
+with pkgs;
+[
+  nixd
+  nixfmt-rfc-style
   cowsay
   firefox-unwrapped
   discord
   zoom-us
-  nerd-fonts.jetbrains-mono
 ]
