@@ -30,7 +30,7 @@
           home-manager.enable = lib.mkForce true;
 
           # terminal
-          kitty.enable = lib.mkForce true;
+          kitty = builtins.import ./kitty.nix { };
 
           # cli
           zsh = builtins.import ./zsh.nix { inherit lib pkgs; };
