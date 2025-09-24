@@ -14,9 +14,15 @@
           jnoortheen.nix-ide
           eamodio.gitlens
           usernamehw.errorlens
+          golang.go
+          bradlc.vscode-tailwindcss
+          charliermarsh.ruff
+          esbenp.prettier-vscode
+          dbaeumer.vscode-eslint
         ];
         openVsxExt = with pkgs.open-vsx; [
           jeanp413.open-remote-ssh
+          # ms-toolsai.jupyter # bugged out version, downgrade?
         ];
       in
       marketplaceExt ++ openVsxExt;

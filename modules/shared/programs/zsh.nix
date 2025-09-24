@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
   enable = true;
 
@@ -10,6 +7,7 @@
   enableCompletion = true;
   autosuggestion.enable = true;
   syntaxHighlighting.enable = true;
+  history.size = 690;
 
   # sane aliases
   shellAliases = {
@@ -25,7 +23,7 @@
   };
 
   # init extra
-  initContent = ''
+  initContent = lib.mkBefore ''
     export EDITOR=nvim
     export FZF_DEFAULT_COMMAND="fd --type f"
     eval "$(zoxide init zsh)"
