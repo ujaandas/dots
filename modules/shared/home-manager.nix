@@ -33,7 +33,7 @@
           kitty.enable = lib.mkForce true;
 
           # cli
-          zsh = builtins.import ./programs/zsh.nix { inherit lib pkgs; };
+          zsh = builtins.import ./zsh.nix { inherit lib pkgs; };
           eza.enable = lib.mkForce true;
           bat.enable = lib.mkForce true;
           btop.enable = lib.mkForce true;
@@ -53,7 +53,7 @@
           };
 
           # trying out vscodium
-          vscode = lib.mkForce (builtins.import ./programs/vscode.nix { inherit pkgs lib; });
+          vscode = lib.mkForce (builtins.import ./vscode.nix { inherit pkgs lib; });
         };
 
         # xdg sup
