@@ -61,6 +61,7 @@
         specialArgs = inputs // {
           inherit username;
         };
+
         modules = [
           ./hosts/darwin/default.nix
           agenix.nixosModules.default

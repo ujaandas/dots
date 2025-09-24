@@ -33,7 +33,7 @@
           kitty.enable = lib.mkForce true;
 
           # cli
-          zsh = builtins.import ./programs/zsh.nix { inherit lib; };
+          zsh = builtins.import ./programs/zsh.nix { inherit lib pkgs; };
           eza.enable = lib.mkForce true;
           bat.enable = lib.mkForce true;
           btop.enable = lib.mkForce true;

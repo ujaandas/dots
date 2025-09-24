@@ -1,17 +1,26 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   enable = true;
 
-  # basic stuff, duh
+  # basic stuff
   autocd = true;
   enableCompletion = true;
   autosuggestion.enable = true;
   syntaxHighlighting.enable = true;
-  history.size = 690;
 
-  # sane aliases
+  # history
+  history = {
+    size = 10000;
+    save = 10000;
+    share = true;
+    ignoreDups = true;
+    ignoreSpace = true;
+    extended = true;
+  };
+
+  # aliases
   shellAliases = {
-    ls = "eza --icons";
+    ls = "eza --icons=always $@";
     ll = "eza -l";
     la = "eza -la";
     cat = "bat --paging=never";
@@ -28,5 +37,15 @@
     export FZF_DEFAULT_COMMAND="fd --type f"
     eval "$(zoxide init zsh)"
     eval "$(direnv hook zsh)"
+    source ${./p10k.zsh}
   '';
+
+  # plugins
+  plugins = [
+    {
+      name = pkgs.zsh-powerlevel10k.pname;
+      inherit (pkgs.zsh-powerlevel10k) src;
+      file = "powerlevel10k.zsh-theme";
+    }
+  ];
 }
