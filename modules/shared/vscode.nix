@@ -57,6 +57,9 @@
 
       # fmt/linting
       "editor.formatOnSave" = true;
+      "files.associations" = {
+        "*.css" = "tailwindcss";
+      };
 
       # intellisense
       "editor.quickSuggestions" = {
@@ -78,6 +81,11 @@
         "serverPath" = "nixd";
         "enableLanguageServer" = true;
         "serverSettings.nixd.formatting.command" = "nixfmt";
+      };
+      "tailwindCSS.includeLanguages" = {
+        "html" = "html";
+        "javascript" = "javascript";
+        "css" = "css";
       };
     };
   };
