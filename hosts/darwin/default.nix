@@ -7,45 +7,12 @@
 }:
 {
   imports = [
+    ../shared
     ../../modules/darwin/home-manager.nix
     ../../modules/darwin/homebrew.nix
   ];
 
-  nixpkgs = {
-    hostPlatform = "aarch64-darwin";
-    config.allowUnfree = true;
-    overlays = [
-      nix-vscode-extensions.overlays.default
-    ];
-  };
-
-  nix = {
-    enable = true;
-
-    gc = {
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
-
-    settings = {
-      experimental-features = "nix-command flakes";
-      warn-dirty = false; # usually is anyways
-    };
-
-    # old, prefer flakes
-    channel.enable = false;
-  };
-
-  # fonts
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-  ];
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
   # use fingerprint for sudo
   security.pam.services.sudo_local.touchIdAuth = true;

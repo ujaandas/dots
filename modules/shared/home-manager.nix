@@ -2,6 +2,7 @@
   lib,
   specialArgs,
   username,
+  isCli ? true,
   ...
 }:
 {
@@ -16,13 +17,17 @@
     # define hm config for the user
     users.${username} =
       { pkgs, ... }:
+      let
+        cliPkgs = import ./cli-packages.nix { inherit pkgs; };
+        guiPkgs = import ./gui-packages.nix { inherit pkgs; };
+      in
       {
         home = {
           username = lib.mkForce username;
           stateVersion = lib.mkForce "25.05";
 
           # default apps
-          packages = lib.mkBefore (builtins.import ./packages.nix { inherit pkgs; });
+          packages = lib.mkBefore (if isCli then cliPkgs else cliPkgs ++ guiPkgs);
         };
 
         programs = {
