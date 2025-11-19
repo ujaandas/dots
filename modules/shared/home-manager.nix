@@ -58,7 +58,7 @@
           };
 
           # trying out vscodium
-          vscode = lib.mkForce (builtins.import ./vscode.nix { inherit pkgs lib; });
+          # vscode = lib.mkForce (builtins.import ./vscode.nix { inherit pkgs lib; });
         };
 
         # xdg sup
