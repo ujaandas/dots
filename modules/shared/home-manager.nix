@@ -2,6 +2,7 @@
   lib,
   specialArgs,
   username,
+  isCli ? true,
   ...
 }:
 {
@@ -16,13 +17,17 @@
     # define hm config for the user
     users.${username} =
       { pkgs, ... }:
+      let
+        cliPkgs = import ./cli-packages.nix { inherit pkgs; };
+        guiPkgs = import ./gui-packages.nix { inherit pkgs; };
+      in
       {
         home = {
           username = lib.mkForce username;
           stateVersion = lib.mkForce "25.11";
 
           # default apps
-          packages = lib.mkBefore (builtins.import ./packages.nix { inherit pkgs; });
+          packages = lib.mkBefore (if isCli then cliPkgs else cliPkgs ++ guiPkgs);
         };
 
         programs = {
@@ -30,10 +35,10 @@
           home-manager.enable = lib.mkForce true;
 
           # terminal
-          kitty = builtins.import ./kitty.nix { };
+          kitty = import ./kitty.nix { };
 
           # cli
-          zsh = builtins.import ./zsh.nix { inherit lib pkgs; };
+          zsh = import ./zsh.nix { inherit lib pkgs; };
           eza.enable = lib.mkForce true;
           bat.enable = lib.mkForce true;
           btop.enable = lib.mkForce true;
@@ -43,7 +48,7 @@
           };
           ripgrep.enable = lib.mkForce true;
           fd.enable = lib.mkForce true;
-          vim = builtins.import ./vim.nix;
+          vim = import ./vim.nix;
 
           # direnv
           direnv = {
@@ -53,7 +58,7 @@
           };
 
           # trying out vscodium
-          vscode = builtins.import ./vscode.nix { inherit pkgs lib; };
+          vscode = import ./vscode.nix { inherit pkgs lib; };
         };
 
         # xdg sup
