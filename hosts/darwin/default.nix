@@ -148,6 +148,36 @@
           # autoquit printer when done
           "Quit When Finished" = true;
         };
+
+        "com.apple.symbolichotkeys" = {
+          # disable Spotlight search (cmd + spc)
+          "64" = {
+            enabled = false;
+            # copied from `defaults read`
+            value = {
+              parameters = [
+                32
+                49
+                1048576
+              ];
+              type = "standard";
+            };
+          };
+
+          # disable spotlight window (ctrl + cmd + spc)
+          "65" = {
+            enabled = false;
+            # copied from `defaults read`
+            value = {
+              parameters = [
+                32
+                49
+                1572864
+              ];
+              type = "standard";
+            };
+          };
+        };
       };
     };
 

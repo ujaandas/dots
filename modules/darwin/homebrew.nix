@@ -24,8 +24,15 @@
 
   homebrew = {
     enable = true;
-    # for now, replaced with home-manager with recent fix
-    casks = [ ];
+    # for now, largely replaced with home-manager with recent fix
+    # just keeping apps not in nixpkgs or janky
+    casks = [
+      "alfred"
+      "alt-tab"
+    ];
+    brews = [
+      "tcl-tk@8"
+    ];
     taps = builtins.attrNames config.nix-homebrew.taps; # align tap config with nix-homebrew
     onActivation.cleanup = "zap"; # run `brew uninstall --zap` for all formulae not in brewfile
   };

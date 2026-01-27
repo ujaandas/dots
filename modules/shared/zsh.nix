@@ -1,6 +1,12 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   enable = true;
+
+  # dotDir = "${config.xdg.configHome}/zsh";
 
   # basic stuff
   autocd = true;
@@ -23,17 +29,20 @@
     ls = "eza --icons=always $@";
     ll = "eza -l";
     la = "eza -la";
-    cat = "bat --paging=never";
+    lso = "ls";
+
+    bat = "bat --paging=never";
+
     top = "btop";
+    topo = "top";
+
     cd = "z";
-    grep = "rg";
-    find = "fd";
-    vim = "nvim";
+    cdo = "cd";
   };
 
   # init extra
   initContent = lib.mkBefore ''
-    export EDITOR=nvim
+    export EDITOR=vim
     export FZF_DEFAULT_COMMAND="fd --type f"
     eval "$(zoxide init zsh)"
     eval "$(direnv hook zsh)"

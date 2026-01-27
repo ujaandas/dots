@@ -19,7 +19,7 @@
       {
         home = {
           username = lib.mkForce username;
-          stateVersion = lib.mkForce "25.05";
+          stateVersion = lib.mkForce "25.11";
 
           # default apps
           packages = lib.mkBefore (builtins.import ./packages.nix { inherit pkgs; });
@@ -43,7 +43,7 @@
           };
           ripgrep.enable = lib.mkForce true;
           fd.enable = lib.mkForce true;
-          neovim.enable = lib.mkForce true;
+          vim = builtins.import ./vim.nix;
 
           # direnv
           direnv = {
@@ -53,7 +53,7 @@
           };
 
           # trying out vscodium
-          vscode = lib.mkForce (builtins.import ./vscode.nix { inherit pkgs lib; });
+          vscode = builtins.import ./vscode.nix { inherit pkgs lib; };
         };
 
         # xdg sup

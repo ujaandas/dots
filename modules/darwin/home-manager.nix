@@ -20,17 +20,17 @@
 
   # override default application linking with a custom set
   # from https://github.com/nix-community/home-manager/issues/1341#issuecomment-3256894180
-  system.build.applications = lib.mkForce (
-    pkgs.buildEnv {
-      name = "system-applications";
-      pathsToLink = "/Applications";
+  # system.build.applications = lib.mkForce (
+  #   pkgs.buildEnv {
+  #     name = "system-applications";
+  #     # pathsToLink = "/Applications";
 
-      # combine system packages with all user home packages
-      paths =
-        config.environment.systemPackages
-        ++ (builtins.concatMap (x: x.home.packages) (lib.attrsets.attrValues config.home-manager.users));
-    }
-  );
+  #     # combine system packages with all user home packages
+  #     paths =
+  #       config.environment.systemPackages
+  #       ++ (builtins.concatMap (x: x.home.packages) (lib.attrsets.attrValues config.home-manager.users));
+  #   }
+  # );
 
   home-manager = {
     sharedModules = lib.mkAfter [
@@ -48,6 +48,8 @@
 
           # my apps
           packages = lib.mkAfter (builtins.import ./packages.nix { inherit pkgs; });
+        };
+        programs = {
         };
       };
   };

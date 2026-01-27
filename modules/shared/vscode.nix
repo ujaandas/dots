@@ -19,10 +19,12 @@
           charliermarsh.ruff
           esbenp.prettier-vscode
           dbaeumer.vscode-eslint
+          # james-yu.latex-workshop
+          llvm-vs-code-extensions.vscode-clangd
         ];
         openVsxExt = with pkgs.open-vsx; [
           jeanp413.open-remote-ssh
-          # ms-toolsai.jupyter # bugged out version, downgrade?
+          ms-toolsai.jupyter # bugged out version, downgrade?
         ];
       in
       marketplaceExt ++ openVsxExt;
@@ -50,6 +52,18 @@
       "explorer.compactFolders" = false;
       "zenMode.fullScreen" = false;
 
+      # editor prefs
+      "extensions.autoCheckUpdates" = false;
+      "extensions.autoUpdate" = false;
+      "update.mode" = "none";
+      "workbench.editorAssociations" = {
+        "*.pdf" = "latex-workshop-pdf-hook";
+      };
+
+      # ssh
+      "remote.SSH.showLoginTerminal" = true;
+      "remote.SSH.useLocalServer" = false;
+
       # font
       "editor.fontFamily" = "'JetBrainsMono Nerd Font', Consolas, 'Courier New', monospace";
       "editor.fontLigatures" = true;
@@ -67,6 +81,9 @@
         "comments" = false;
         "strings" = true;
       };
+      "clangd.arguments" = [
+        "--compile-commands-dir=build"
+      ];
 
       # shell
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
@@ -86,6 +103,12 @@
         "html" = "html";
         "javascript" = "javascript";
         "css" = "css";
+      };
+      "[json]" = {
+        "editor.defaultFormatter" = "vscode.json-language-features";
+      };
+      "[javascript]" = {
+        "editor.defaultFormatter" = "vscode.typescript-language-features";
       };
     };
   };

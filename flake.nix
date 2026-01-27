@@ -72,7 +72,6 @@
 
       devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
         buildInputs = [
-          self.packages.${system}.search
           self.packages.${system}.build
           self.packages.${system}.activate
           self.packages.${system}.rebuild
@@ -99,76 +98,70 @@
             };
         in
         {
-          search = mkScript "search" ''
-            echo "🔍 Starting nixpkgs REPL..."
-            nix repl -f '<nixpkgs>'
-            echo "👋 REPL exited."
-          '';
-
           build = mkScript "build" ''
-            echo "🔨 Building system flake..."
+            echo "Building system flake..."
             if sudo darwin-rebuild build --flake .#${username}; then
-              echo "✅ Build completed successfully."
+              echo "Build completed successfully."
             else
-              echo "❌ Build failed."
+              echo "Build failed."
               exit 1
             fi
           '';
 
           activate = mkScript "activate" ''
-            echo "🚀 Activating system..."
+            echo "Activating system..."
             if sudo result/activate; then
-              echo "✅ Activation completed successfully."
+              echo "Activation completed successfully."
             else
-              echo "❌ Activation failed."
+              echo "Activation failed."
               exit 1
             fi
           '';
 
           format = mkScript "format" ''
-            echo "🎨 Formatting Nix code..."
+            echo "Formatting Nix code..."
             if treefmt --walk git; then
-              echo "✅ Formatting completed successfully."
+              echo "Formatting completed successfully."
             else
-              echo "❌ Formatting failed."
+              echo "Formatting failed."
               exit 1
             fi
           '';
 
           lint = mkScript "lint" ''
-            echo "🔍 Linting Nix code..."
+            echo "Linting Nix code..."
             if statix check --ignore result .direnv; then
-              echo "✅ Linting passed with no issues."
+              echo "Linting passed with no issues."
             else
-              echo "❌ Linting failed: issues detected."
+              echo "Linting failed: issues detected."
               exit 1
             fi
           '';
 
           check = mkScript "check" ''
-            echo "☑️ Checking flake..."
+            echo "Checking flake..."
             if nix flake check; then
-              echo "✅ Flake check passed with no issues."
+              echo "Flake check passed with no issues."
             else
-              echo "❌ Flake check failed: issues detected."
+              echo "Flake check failed: issues detected."
               exit 1
             fi
           '';
 
           test-all = mkScript "test-all" ''
-            echo "🧪 Testing system..."
+            echo "Testing system..."
             check || exit 1
             format || exit 1
             lint || exit 1
             build || exit 1
-            echo "✅ Test completed successfully."
+            echo "Test completed successfully."
           '';
 
           rebuild = mkScript "rebuild" ''
-            echo "🔁 Rebuilding system..."
+            echo "Rebuilding system..."
             test-all || exit 1
             activate || exit 1
-            echo "✅ Rebuild completed successfully."
+            echo "Rebuild completed successfully."
           '';
         };
     };
