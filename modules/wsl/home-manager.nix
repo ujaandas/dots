@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   username,
   pkgs,
   ...
@@ -26,7 +25,7 @@
       {
         home = {
           # my apps
-          packages = lib.mkAfter (builtins.import ./packages.nix { inherit pkgs; });
+          packages = lib.mkAfter (import ./packages.nix { inherit pkgs; });
         };
       };
   };
