@@ -87,7 +87,7 @@
 
       # shell
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
-      "terminal.integrated.defaultProfile.linux" = "bash";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
 
       # gitlens
       "gitlens.currentLine.enabled" = true;
