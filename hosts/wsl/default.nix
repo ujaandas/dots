@@ -17,4 +17,7 @@
   wsl.defaultUser = "ooj";
 
   nixpkgs.hostPlatform = "x86_64-linux";
+
+  # git
+  programs.git.enable = true;
 }

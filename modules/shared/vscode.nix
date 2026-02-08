@@ -110,6 +110,13 @@
       "[javascript]" = {
         "editor.defaultFormatter" = "vscode.typescript-language-features";
       };
+      "[typescript]" = {
+        "editor.defaultFormatter" = "vscode.typescript-language-features";
+      };
+      "[typescriptreact]" = {
+        "editor.defaultFormatter" = "vscode.typescript-language-features";
+      };
+      "svelte.enable-ts-plugin" = true;
     };
   };
 }

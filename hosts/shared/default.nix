@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  username,
   nix-vscode-extensions,
   ...
 }:
@@ -38,7 +36,4 @@
 
   # zsh
   programs.zsh.enable = true;
-
-  # git
-  programs.git.enable = true;
 }
