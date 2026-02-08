@@ -77,21 +77,21 @@
             };
         in
         {
-          search = mkScript "search" "nix repl -f '<nixpkgs>' ";
-          build = mkScript "build" ''
-            case "$(uname)" in
-              Darwin) sudo darwin-rebuild build --flake .#${username} ;;
-              Linux)  sudo nixos-rebuild build --flake .#${username} ;;
-            esac
-          '';
-          activate = mkScript "activate" ''
-            if [[ -e result/activate ]]; then sudo result/activate; fi
-          '';
           format = mkScript "format" "treefmt --walk git";
           lint = mkScript "lint" "statix check --ignore result .direnv";
           check = mkScript "check" "nix flake check";
-          test-all = mkScript "test-all" "check && format && lint && build";
-          rebuild = mkScript "rebuild" "test-all && activate";
+          test-all = mkScript "test-all" "check && format && lint";
+          rebuild-os = mkScript "rebuild-os" ''
+            case "$(uname)" in
+              Darwin)
+                sudo darwin-rebuild switch --flake .#${username}
+                ;;
+              Linux)
+                sudo nixos-rebuild switch --flake .#${username}
+                ;;
+            esac
+          '';
+          rebuild = mkScript "rebuild" "test-all && rebuild-os";
         };
     in
     {

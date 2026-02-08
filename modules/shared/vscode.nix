@@ -24,7 +24,7 @@
         ];
         openVsxExt = with pkgs.open-vsx; [
           jeanp413.open-remote-ssh
-          ms-toolsai.jupyter # bugged out version, downgrade?
+          ms-toolsai.jupyter # bugged out version; downgrade?
         ];
       in
       marketplaceExt ++ openVsxExt;
@@ -65,7 +65,7 @@
       "remote.SSH.useLocalServer" = false;
 
       # font
-      "editor.fontFamily" = "'JetBrainsMono Nerd Font', Consolas, 'Courier New', monospace";
+      "editor.fontFamily" = "'JetBrainsMono Nerd Font'; Consolas; 'Courier New'; monospace";
       "editor.fontLigatures" = true;
       "editor.fontSize" = 13;
 
@@ -87,7 +87,8 @@
 
       # shell
       "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
-      "terminal.integrated.defaultProfile.linux" = "bash";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
+      "terminal.integrated.profiles.linux.zsh.path" = "/etc/profiles/per-user/ooj/bin/zsh";
 
       # gitlens
       "gitlens.currentLine.enabled" = true;
