@@ -32,6 +32,10 @@ set backspace=indent,eol,start
 set diffopt=iwhite
 set tabpagemax=100
 
+let &t_SI = "\e[6 q"   " Insert mode: bar
+let &t_EI = "\e[2 q"   " Normal mode: block
+
+
 " Leader key
 let mapleader = " "
 
