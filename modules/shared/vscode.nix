@@ -51,6 +51,8 @@
       "editor.smoothScrolling" = true;
       "explorer.compactFolders" = false;
       "zenMode.fullScreen" = false;
+      "zenMode.centerLayout" = true;
+      "zenMode.showTabs" = false;
 
       # editor prefs
       "extensions.autoCheckUpdates" = false;
@@ -65,7 +67,7 @@
       "remote.SSH.useLocalServer" = false;
 
       # font
-      "editor.fontFamily" = "'JetBrainsMono Nerd Font'; Consolas; 'Courier New'; monospace";
+      "editor.fontFamily" = "JetBrainsMono Nerd Font";
       "editor.fontLigatures" = true;
       "editor.fontSize" = 13;
 
