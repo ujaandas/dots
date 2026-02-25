@@ -49,6 +49,7 @@
           ripgrep.enable = lib.mkForce true;
           fd.enable = lib.mkForce true;
           vim = import ./vim.nix;
+          tmux.enable = lib.mkForce true;
 
           # direnv
           direnv = {

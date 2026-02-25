@@ -69,7 +69,7 @@
       # font
       "editor.fontFamily" = "JetBrainsMono Nerd Font";
       "editor.fontLigatures" = true;
-      "editor.fontSize" = 13;
+      "editor.fontSize" = 14;
 
       # fmt/linting
       "editor.formatOnSave" = true;
