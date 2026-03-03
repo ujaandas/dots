@@ -48,7 +48,7 @@
           };
           ripgrep.enable = lib.mkForce true;
           fd.enable = lib.mkForce true;
-          vim = import ./vim.nix;
+          vim = import ./vim.nix { inherit pkgs; };
           tmux = import ./tmux.nix { inherit pkgs; };
 
           # direnv

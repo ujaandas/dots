@@ -1,5 +1,70 @@
+{ pkgs, ... }:
+
 {
   enable = true;
 
-  extraConfig = builtins.readFile ./.vimrc;
+  plugins = with pkgs.vimPlugins; [
+    catppuccin-vim
+    vim-commentary
+  ];
+
+  settings = {
+    # UI
+    number = true;
+    relativenumber = true;
+    expandtab = true;
+    shiftwidth = 2;
+    tabstop = 2;
+    ignorecase = true;
+    smartcase = true;
+    mouse = "a";
+    copyindent = true;
+    background = "dark";
+  };
+
+  extraConfig = ''
+    " UI
+    set nocompatible
+    set title
+    set encoding=utf-8
+    set showcmd
+    set cursorline
+    set textwidth=80
+    set laststatus=2
+    set wildignorecase
+    set nowrap
+    set ttyfast
+    set termguicolors
+
+    " Searching
+    set hlsearch
+    set incsearch
+    set gdefault
+
+    " Indenting
+    set smartindent
+    set smarttab
+
+    " Misc
+    set scrolloff=4
+    set backspace=indent,eol,start
+    set diffopt=iwhite
+    set tabpagemax=100
+    set whichwrap=bs<>[]
+    set hidden
+    set history=1000
+
+    " Leader key
+    let mapleader = " "
+
+    " Enable syntax + filetypes
+    syntax enable
+    filetype plugin indent on
+
+    " Netrw
+    let g:netrw_banner = 0
+
+    " Theme
+    colorscheme catppuccin_mocha
+  '';
 }
