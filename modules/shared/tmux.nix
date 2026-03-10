@@ -16,6 +16,6 @@
     tmuxPlugins.tmux-which-key
   ];
   extraConfig = ''
-    set -ga terminal-overrides ",tmux-256color:RGB"
+    set -ga terminal-overrides ",*:RGB"
   '';
 }
