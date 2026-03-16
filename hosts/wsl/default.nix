@@ -1,23 +1,22 @@
 {
-  config,
-  pkgs,
-  username,
-  wsl,
-  vscode-server,
   ...
 }:
 {
   imports = [
     ../shared
-    ../../modules/wsl/home-manager.nix
+    ../../modules/wsl
   ];
 
-  system.stateVersion = "25.05";
-  wsl.enable = true;
-  wsl.defaultUser = "ooj";
+  # Choose features
+  features = {
+    # Shared packages
+    getStdCliPkgs = true;
+    getStdGuiPkgs = false;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
-
-  # git
-  programs.git.enable = true;
+    # Custom packages
+    vim.enable = true;
+    tmux.enable = true;
+    zsh.enable = true;
+    vscode.enable = true;
+  };
 }

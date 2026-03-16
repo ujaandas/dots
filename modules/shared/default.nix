@@ -10,11 +10,11 @@ let
 in
 {
   imports = [
-    ./shared/kitty.nix
-    ./shared/tmux.nix
-    ./shared/vim.nix
-    ./shared/vscode.nix
-    ./shared/zsh.nix
+    ./kitty.nix
+    ./tmux.nix
+    ./vim.nix
+    ./vscode.nix
+    ./zsh.nix
   ];
 
   options.features = {
