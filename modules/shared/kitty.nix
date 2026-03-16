@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  username,
   ...
 }:
 let
@@ -10,7 +11,7 @@ in
   options.features.kitty.enable = lib.mkEnableOption "Enable custom Kitty configuration.";
 
   config = lib.mkIf cfg.enable {
-    programs.kitty = {
+    home-manager.users.${username}.programs.kitty = {
       enable = true;
       enableGitIntegration = true;
 

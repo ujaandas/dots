@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
   options.features.zsh.enable = lib.mkEnableOption "Enable custom zsh configuration.";
 
   config = lib.mkIf cfg.enable {
-    programs.zsh = {
+    home-manager.users.${username}.programs.zsh = {
       enable = true;
 
       # dotDir = "${config.xdg.configHome}/zsh";

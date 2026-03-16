@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
   options.features.vscode.enable = lib.mkEnableOption "Enable custom VSCode configuration.";
 
   config = lib.mkIf cfg.enable {
-    programs.vscode = {
+    home-manager.users.${username}.programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
 

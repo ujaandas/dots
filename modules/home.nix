@@ -28,68 +28,76 @@ in
   };
 
   config = {
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      extraSpecialArgs = { inherit username; };
+      backupFileExtension = "bak";
 
-    home = {
-      inherit username;
-      stateVersion = "25.11";
-    };
+      users.${username} = {
+        home = {
+          inherit username;
+          stateVersion = "25.11";
 
-    xdg.enable = true;
+          packages = lib.flatten [
+            # Essential CLI tools
+            (with pkgs; [
+              zsh
+              eza
+              bat
+              btop
+              ripgrep
+              fd
+            ])
 
-    home.packages = lib.flatten [
-      # Essential CLI tools
-      (with pkgs; [
-        zsh
-        eza
-        bat
-        btop
-        ripgrep
-        fd
-      ])
+            # Extra CLI suite
+            (lib.optionals cfg.getStdCliPkgs (
+              with pkgs;
+              [
+                nixd
+                nixfmt
+                wget
+                cowsay
+              ]
+            ))
 
-      # Extra CLI suite
-      (lib.optionals cfg.getStdCliPkgs (
-        with pkgs;
-        [
-          nixd
-          nixfmt
-          wget
-          cowsay
-        ]
-      ))
+            # Extra GUI suite
+            (lib.optionals cfg.getStdGuiPkgs (
+              with pkgs;
+              [
+                firefox-unwrapped
+                discord
+                zoom-us
+              ]
+            ))
 
-      # Extra GUI suite
-      (lib.optionals cfg.getStdGuiPkgs (
-        with pkgs;
-        [
-          firefox-unwrapped
-          discord
-          zoom-us
-        ]
-      ))
+            # Extension hook
+            cfg.extraPackages
+          ];
+        };
 
-      # Extension hook
-      cfg.extraPackages
-    ];
+        programs = {
+          home-manager.enable = true;
 
-    programs = {
-      home-manager.enable = true;
+          # Standard CLI suite
+          eza.enable = true;
+          bat.enable = true;
+          btop.enable = true;
+          ripgrep.enable = true;
 
-      # Standard CLI suite
-      eza.enable = true;
-      bat.enable = true;
-      btop.enable = true;
-      ripgrep.enable = true;
+          zoxide = {
+            enable = true;
+            enableZshIntegration = true;
+          };
 
-      zoxide = {
-        enable = true;
-        enableZshIntegration = true;
-      };
+          direnv = {
+            enable = true;
+            enableZshIntegration = true;
+            nix-direnv.enable = true;
+          };
+        };
 
-      direnv = {
-        enable = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
+        xdg.enable = true;
       };
     };
   };

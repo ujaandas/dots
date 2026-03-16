@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
   options.features.tmux.enable = lib.mkEnableOption "Enable custom tmux configuration.";
 
   config = lib.mkIf cfg.enable {
-    programs.tmux = {
+    home-manager.users.${username}.programs.tmux = {
       enable = true;
       terminal = "tmux-256color";
 

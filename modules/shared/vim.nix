@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
   options.features.vim.enable = lib.mkEnableOption "Enable custom Vim configuration.";
 
   config = lib.mkIf cfg.enable {
-    programs.vim = {
+    home-manager.users.${username}.programs.vim = {
       enable = true;
 
       plugins = with pkgs.vimPlugins; [
