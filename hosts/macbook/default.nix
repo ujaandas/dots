@@ -32,7 +32,7 @@
       alt-tab-macos
     ];
 
-    # Darwin-only options (Now valid!)
+    # Not on nixpkgs, use Homebrew cask
     extraCasks = [
       "alfred"
     ];
