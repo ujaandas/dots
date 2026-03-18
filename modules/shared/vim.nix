@@ -17,7 +17,6 @@ in
 
       plugins = with pkgs.vimPlugins; [
         catppuccin-vim
-        vim-commentary
       ];
 
       settings = {
@@ -64,6 +63,7 @@ in
         set whichwrap=bs<>[]
         set hidden
         set history=1000
+        set clipboard=unnamedplus
 
         " Leader key
         let mapleader = " "
