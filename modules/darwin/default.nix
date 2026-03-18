@@ -1,7 +1,7 @@
 { lib, username, ... }:
 {
   imports = [
-    ../home.nix # Pull in all base options
+    ../shared # Pull in all base options
     ./system.nix # Get system settings
     ./homebrew.nix # Get Homebrew stuff
   ];
