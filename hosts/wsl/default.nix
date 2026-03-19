@@ -3,7 +3,6 @@
 }:
 {
   imports = [
-    ../shared
     ../../modules/wsl
   ];
 

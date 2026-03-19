@@ -3,6 +3,7 @@
   lib,
   pkgs,
   username,
+  nix-vscode-extensions,
   ...
 }:
 let
@@ -28,6 +29,38 @@ in
   };
 
   config = {
+    # Shared nixpkgs config
+    nixpkgs = {
+      config.allowUnfree = true;
+      overlays = [
+        nix-vscode-extensions.overlays.default
+      ];
+    };
+
+    # Shared nix config
+    nix = {
+      enable = true;
+      gc = {
+        automatic = true;
+        options = "--delete-older-than 30d";
+      };
+      settings = {
+        experimental-features = "nix-command flakes";
+        warn-dirty = false; # usually is anyways
+      };
+      # Old, prefer flakes
+      channel.enable = false;
+    };
+
+    # Fonts
+    fonts.packages = with pkgs; [
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+    ];
+
+    # Install Zsh system-wide
+    programs.zsh.enable = true;
+
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;

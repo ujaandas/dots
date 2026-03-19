@@ -15,8 +15,6 @@ in
     home-manager.users.${username}.programs.zsh = {
       enable = true;
 
-      # dotDir = "${config.xdg.configHome}/zsh";
-
       # basic stuff
       autocd = true;
       enableCompletion = true;

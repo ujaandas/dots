@@ -8,7 +8,7 @@
 
   config = {
     # Darwin-specific Nix settings
-    nixpkgs.hostPlatform = lib.mkForce "aarch64-darwin";
+    nixpkgs.hostPlatform = "aarch64-darwin";
 
     # Darwin-specific HM settings
     home-manager = {

@@ -11,7 +11,7 @@
 
   config = {
     # WSL-specific Nix settings
-    nixpkgs.hostPlatform = lib.mkForce "x86_64-linux";
+    nixpkgs.hostPlatform = "x86_64-linux";
     wsl.enable = true;
     wsl.defaultUser = "ooj";
     system.stateVersion = "25.05";
