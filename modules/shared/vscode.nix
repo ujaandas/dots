@@ -93,9 +93,6 @@ in
             "comments" = false;
             "strings" = true;
           };
-          "clangd.arguments" = [
-            "--compile-commands-dir=build"
-          ];
 
           # shell
           "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
