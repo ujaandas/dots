@@ -29,6 +29,10 @@ in
               set -g @catppuccin_flavour "mocha"
               set -g @catppuccin_window_tabs_enabled on
               set -g @catppuccin_date_time "%H:%M"
+              # https://github.com/catppuccin/tmux/issues/53
+              set -g @catppuccin_window_default_text "#W"
+              set -g @catppuccin_window_current_text "#W"
+              set -g @catppuccin_window_text "#W"
             '';
           }
           tmuxPlugins.better-mouse-mode
@@ -37,6 +41,7 @@ in
 
         extraConfig = ''
           set -ga terminal-overrides ",*:RGB"
+          set -g mouse on
         '';
       };
     }
