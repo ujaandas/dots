@@ -24,6 +24,6 @@
     vim.enable = true;
     tmux.enable = true;
     zsh.enable = true;
-    vscode.enable = true;
+    vscodium.enable = true;
   };
 }

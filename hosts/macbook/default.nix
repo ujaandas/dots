@@ -22,7 +22,7 @@
     tmux.enable = true;
     zsh.enable = true;
     kitty.enable = true;
-    vscode.enable = true;
+    vscodium.enable = true;
 
     # Darwin-specific packages
     extraPackages = with pkgs; [

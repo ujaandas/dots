@@ -6,18 +6,18 @@
   ...
 }:
 let
-  cfg = config.nots.features.vscode;
+  cfg = config.nots.features.vscodium;
   dotUsername = config.nots.username;
   hasHomeManager = options ? home-manager;
   notsLib = import ../../lib/nots.nix { inherit lib; };
 in
 {
-  options.nots.features.vscode.enable = lib.mkEnableOption "Enable custom VSCode configuration.";
+  options.nots.features.vscodium.enable = lib.mkEnableOption "Enable custom VSCode configuration.";
 
   config = lib.mkIf cfg.enable (
     notsLib.mkProgramConfig {
       inherit hasHomeManager dotUsername;
-      program = "vscode";
+      program = "vscodium";
       attrs = {
         enable = true;
         package = pkgs.vscodium;
