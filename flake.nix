@@ -95,23 +95,33 @@
         };
     in
     {
+      nixosModules = {
+        nots = ./modules/nixos;
+        shared = ./modules/shared;
+        default = self.nixosModules.nots;
+      };
+
+      darwinModules = {
+        nots = ./modules/darwin;
+        shared = ./modules/shared;
+        default = self.darwinModules.nots;
+      };
+
       # OS-specific configs
-      # nixosConfigurations.${username} = nixpkgs.lib.nixosSystem {
-      #   specialArgs = inputs // {
-      #     inherit username;
-      #     isCli = true;
-      #   };
-      #   modules = [
-      #     ./hosts/wsl
-      #     wsl.nixosModules.default
-      #     home-manager.nixosModules.home-manager
-      #   ];
-      # };
+      nixosConfigurations.${username} = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs // {
+          inherit username;
+        };
+        modules = [
+          ./hosts/wsl
+          wsl.nixosModules.default
+          home-manager.nixosModules.home-manager
+        ];
+      };
 
       darwinConfigurations.${username} = darwin.lib.darwinSystem {
         specialArgs = inputs // {
           inherit username;
-          isCli = false;
         };
         modules = [
           ./hosts/macbook

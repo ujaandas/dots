@@ -1,27 +1,27 @@
-{ lib, username, ... }:
+{ lib, config, ... }:
 {
   imports = [
-    ../home.nix # Pull in all base options
+    ../shared # Pull in all base options
     ./system.nix # Get system settings
     ./homebrew.nix # Get Homebrew stuff
   ];
 
   config = {
     # Darwin-specific Nix settings
-    nixpkgs.hostPlatform = lib.mkForce "aarch64-darwin";
+    nixpkgs.hostPlatform = "aarch64-darwin";
 
     # Darwin-specific HM settings
     home-manager = {
       sharedModules = [
         { targets.darwin.linkApps.enable = false; }
       ];
-      users.${username}.home.homeDirectory = lib.mkForce "/Users/${username}";
+      users.${config.nots.username}.home.homeDirectory = lib.mkForce "/Users/${config.nots.username}";
     };
 
     # Configure userspace
-    users.users.${username} = {
-      name = username;
-      home = "/Users/${username}";
+    users.users.${config.nots.username} = {
+      name = config.nots.username;
+      home = "/Users/${config.nots.username}";
       isHidden = false;
     };
   };

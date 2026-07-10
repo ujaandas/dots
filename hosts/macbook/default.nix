@@ -4,12 +4,11 @@
 }:
 {
   imports = [
-    ../shared
     ../../modules/darwin
   ];
 
   # Choose features
-  features = {
+  nots.features = {
     # System settings
     useTouchIdSudo = true;
     useSaneSystemSettings = true;
