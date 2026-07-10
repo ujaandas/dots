@@ -137,47 +137,6 @@ in
             };
             "svelte.enable-ts-plugin" = true;
           };
-
-          # intellisense
-          "editor.quickSuggestions" = {
-            "other" = true;
-            "comments" = false;
-            "strings" = true;
-          };
-
-          # shell
-          "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
-          "terminal.integrated.defaultProfile.linux" = "zsh";
-          "terminal.integrated.profiles.linux.zsh.path" = "/etc/profiles/per-user/ooj/bin/zsh";
-
-          # gitlens
-          "gitlens.currentLine.enabled" = true;
-          "gitlens.hovers.enabled" = true;
-
-          # language specific
-          "nix" = {
-            "serverPath" = "nixd";
-            "enableLanguageServer" = true;
-            "serverSettings.nixd.formatting.command" = "nixfmt";
-          };
-          "tailwindCSS.includeLanguages" = {
-            "html" = "html";
-            "javascript" = "javascript";
-            "css" = "css";
-          };
-          "[json]" = {
-            "editor.defaultFormatter" = "vscode.json-language-features";
-          };
-          "[javascript]" = {
-            "editor.defaultFormatter" = "vscode.typescript-language-features";
-          };
-          "[typescript]" = {
-            "editor.defaultFormatter" = "vscode.typescript-language-features";
-          };
-          "[typescriptreact]" = {
-            "editor.defaultFormatter" = "vscode.typescript-language-features";
-          };
-          "svelte.enable-ts-plugin" = true;
         };
       };
     }

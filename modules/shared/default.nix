@@ -113,6 +113,7 @@ in
                 firefox-unwrapped
                 discord
                 zoom-us
+                mullvad-vpn
               ]
             ))
 

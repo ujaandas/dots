@@ -21,9 +21,9 @@ in
       attrs = {
         enable = true;
 
-      plugins = with pkgs.vimPlugins; [
-        catppuccin-vim
-      ];
+        plugins = with pkgs.vimPlugins; [
+          catppuccin-vim
+        ];
 
         settings = {
           number = true;
@@ -69,6 +69,7 @@ in
           set whichwrap=bs<>[]
           set hidden
           set history=1000
+          set clipboard=unnamedplus
 
           " Leader key
           let mapleader = " "
@@ -84,53 +85,6 @@ in
           colorscheme catppuccin_mocha
         '';
       };
-
-      extraConfig = ''
-        " UI
-        set nocompatible
-        set title
-        set encoding=utf-8
-        set showcmd
-        set cursorline
-        set textwidth=80
-        set laststatus=2
-        set wildignorecase
-        set nowrap
-        set ttyfast
-        set termguicolors
-
-        " Searching
-        set hlsearch
-        set incsearch
-        set gdefault
-
-        " Indenting
-        set smartindent
-        set smarttab
-
-        " Misc
-        set scrolloff=4
-        set backspace=indent,eol,start
-        set diffopt=iwhite
-        set tabpagemax=100
-        set whichwrap=bs<>[]
-        set hidden
-        set history=1000
-        set clipboard=unnamedplus
-
-        " Leader key
-        let mapleader = " "
-
-        " Enable syntax + filetypes
-        syntax enable
-        filetype plugin indent on
-
-        " Netrw
-        let g:netrw_banner = 0
-
-        " Theme
-        colorscheme catppuccin_mocha
-      '';
-    };
-  };
+    }
+  );
 }
