@@ -28,7 +28,6 @@
     extraPackages = with pkgs; [
       obsidian
       rectangle
-      alt-tab-macos
     ];
 
     # Not on nixpkgs, use Homebrew cask
